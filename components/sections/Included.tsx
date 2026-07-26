@@ -22,7 +22,9 @@ export function Included() {
           ))}
         </ul>
 
-        <p className="mt-32 text-center font-sans text-body-s text-slate-500">{content.note}</p>
+        {/* Lighthouse a11y fix: slate-500 on off-white measured 3.85:1, below
+            the 4.5:1 AA threshold; slate-700 (existing token) clears it. */}
+        <p className="mt-32 text-center font-sans text-body-s text-slate-700">{content.note}</p>
       </div>
     </section>
   );

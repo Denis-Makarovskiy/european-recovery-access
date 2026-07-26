@@ -8,6 +8,7 @@ import { MobileStickyBar } from "@/components/layout/MobileStickyBar";
 import { SITE_NAME, SITE_URL, ADMISSIONS_PHONE_DISPLAY } from "@/lib/constants";
 import { GA_ID, IS_ANALYTICS_CONFIGURED } from "@/lib/analytics";
 import { YandexMetrica } from "@/components/analytics/YandexMetrica";
+import { faq as faqContent } from "@/lib/content";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -57,17 +58,64 @@ export const metadata: Metadata = {
   },
 };
 
+const ORGANIZATION_ID = `${SITE_URL}/#organization`;
+
 const organizationJsonLd = {
   "@context": "https://schema.org",
   "@type": "Organization",
+  "@id": ORGANIZATION_ID,
   name: SITE_NAME,
   url: SITE_URL,
   description: DESCRIPTION,
   telephone: ADMISSIONS_PHONE_DISPLAY,
   areaServed: ["US", "CA"],
-  // FAQPage schema is intentionally omitted here: 07-codex-technical-spec.md
-  // only allows it once it exactly matches the visible FAQ content, and the
-  // FAQ section itself hasn't been built yet.
+};
+
+/**
+ * Sibling Service node (not merged into Organization) describing the
+ * placement/admissions-coordination service itself, referencing the
+ * Organization above as `provider`.
+ *
+ * Deliberately typed as generic `Service`, not `MedicalBusiness` /
+ * `MedicalClinic` / `Physician` / `Hospital` or any other health-provider
+ * schema.org type: per 01-product-brief.md this business is not a clinic or
+ * medical provider, and misrepresenting it in structured data would be worse
+ * than omitting the schema. No aggregateRating/review and no invented
+ * numbers, per the same brief.
+ */
+const serviceJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Service",
+  name: `${SITE_NAME} — Addiction Treatment Placement & Admissions Coordination`,
+  serviceType: "Addiction treatment placement and admissions coordination",
+  description: DESCRIPTION,
+  provider: { "@id": ORGANIZATION_ID },
+  areaServed: ["US", "CA"],
+};
+
+/**
+ * FAQPage schema, generated from the same `faq` array (lib/content.ts) that
+ * renders the visible accordion in components/sections/FAQ.tsx, so the two
+ * can never drift. 07-codex-technical-spec.md only permits FAQ schema when
+ * it exactly matches the visible content — deriving both from one source is
+ * what guarantees that. `stripHtml` is defensive: the current copy has no
+ * markup, but the emitted JSON-LD must never carry any if that ever changes.
+ */
+function stripHtml(value: string): string {
+  return value.replace(/<[^>]*>/g, "").trim();
+}
+
+const faqJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: faqContent.map((item) => ({
+    "@type": "Question",
+    name: stripHtml(item.question),
+    acceptedAnswer: {
+      "@type": "Answer",
+      text: stripHtml(item.answer),
+    },
+  })),
 };
 
 export default function RootLayout({
@@ -81,6 +129,14 @@ export default function RootLayout({
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceJsonLd) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
         />
         <Header />
         <main className="flex-1 pb-104 pt-(--layout-header-height) tablet:pb-0">{children}</main>

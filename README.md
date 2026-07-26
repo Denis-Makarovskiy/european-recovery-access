@@ -67,6 +67,7 @@ npm run lint         # ESLint
 - Tailwind v4 theme mapped from `design-tokens.json`, fonts, global metadata and Organization JSON-LD, layout shell (header, footer, mobile sticky bar) and the shared `components/ui/*` primitives.
 - Every section of `02-page-structure.md` except section 10: hero with consultation form, trust strip, why Europe, four-step assessment, how it works, what's included, trust process, suitability, FAQ, final CTA. Section 10 (testimonials) is deliberately absent — no approved copy exists and none may be invented.
 - Lead capture posts to the Cloudflare Worker in `worker/`; the site itself has no server at runtime.
+- Favicon (`app/icon.svg`, `app/apple-icon.png`), Open Graph image (`app/opengraph-image.png`), `app/robots.ts` and `app/sitemap.ts`. The OG image is a pre-rendered PNG rather than a `next/og` `ImageResponse` generator: the brand fonts are only cached as WOFF2 (unsupported by `next/og`'s font parser) and substituting a local system-font path would build locally but break on the `ubuntu-latest` GitHub Actions runner, which has no such path.
 
 ### Known placeholders
 
