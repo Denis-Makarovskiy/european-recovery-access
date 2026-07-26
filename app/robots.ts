@@ -1,0 +1,16 @@
+import type { MetadataRoute } from "next";
+import { SITE_URL } from "@/lib/constants";
+
+// Static export has no server to answer requests at request time, so this
+// must resolve to a fixed robots.txt at build time.
+export const dynamic = "force-static";
+
+export default function robots(): MetadataRoute.Robots {
+  return {
+    rules: {
+      userAgent: "*",
+      allow: "/",
+    },
+    sitemap: `${SITE_URL}/sitemap.xml`,
+  };
+}

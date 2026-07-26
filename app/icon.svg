@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <!--
+    Favicon: a simplified, high-contrast rendering of the shield-and-wheat
+    brand mark (design-refs/brand-logo-sheet.png), reusing the geometry of
+    components/ui/BrandMark.tsx. The wordmark is dropped and strokes are
+    thickened because the full mark is illegible at 16-32px.
+    Colors: navy-950 / gold-600 / gold-500 from design-tokens.json.
+  -->
+  <rect width="100" height="100" fill="#071A2D" />
+  <path
+    d="M50 3 L92 18 L92 50 C92 76 73 92 50 98 C27 92 8 76 8 50 L8 18 Z"
+    fill="#CDA55F"
+  />
+  <path
+    d="M50 15 L80 27 L80 50 C80 69 64 82 50 86 C36 82 20 69 20 50 L20 27 Z"
+    fill="#071A2D"
+  />
+  <g fill="#CDA55F">
+    <path d="M50 82 C38 79 32 71 35 61 C44 62 50 70 50 82 Z" />
+    <path d="M50 82 C62 79 68 71 65 61 C56 62 50 70 50 82 Z" />
+    <path d="M50 64 C40.5 61.5 35.5 54.5 38.5 46 C45.5 47 50 54 50 64 Z" />
+    <path d="M50 64 C59.5 61.5 64.5 54.5 61.5 46 C54.5 47 50 54 50 64 Z" />
+    <path d="M50 46 C43.5 44 39.5 39 41.5 33 C46.5 34 50 39.5 50 46 Z" />
+    <path d="M50 46 C56.5 44 60.5 39 58.5 33 C53.5 34 50 39.5 50 46 Z" />
+  </g>
+  <path
+    d="M46.5 36 C46.5 34.6 47.6 33.5 49 33.5 L51 33.5 C52.4 33.5 53.5 34.6 53.5 36 L53.5 80.5 C53.5 81.9 52.4 83 51 83 L49 83 C47.6 83 46.5 81.9 46.5 80.5 Z"
+    fill="#B9893D"
+  />
+</svg>

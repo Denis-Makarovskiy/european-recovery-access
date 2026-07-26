@@ -9,7 +9,7 @@ import { Card } from "@/components/ui/Card";
 import { Input } from "@/components/ui/Input";
 import { Select } from "@/components/ui/Select";
 import { Modal } from "@/components/ui/Modal";
-import { ADMISSIONS_PHONE_HREF, LEAD_ENDPOINT, SECTION_IDS } from "@/lib/constants";
+import { ADMISSIONS_PHONE_HREF, LEAD_ENDPOINT, SECTION_IDS, assetPath } from "@/lib/constants";
 import { hero as content, heroForm } from "@/lib/content";
 import { trackCallClick, trackHeroCtaClick, trackLeadSubmit, trackLeadSubmitError } from "@/lib/analytics";
 
@@ -270,7 +270,7 @@ export function Hero() {
           utility on the section stays as the loading background, so there is
           no flash of empty navy before the image decodes. */}
       <Image
-        src="/images/hero-2560.avif"
+        src={assetPath("/images/hero-2560.avif")}
         alt=""
         aria-hidden
         fill

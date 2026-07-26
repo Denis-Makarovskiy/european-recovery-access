@@ -103,5 +103,22 @@ export const SITE_NAME = "European Recovery Access";
  * this is overridable per build: set NEXT_PUBLIC_SITE_URL as a repository
  * variable to switch canonical URLs over without a code change.
  */
+/**
+ * Path prefix the site is served under, mirroring `basePath` in
+ * next.config.ts (empty on a custom domain, "/<repo>" on GitHub Pages
+ * project pages).
+ *
+ * Next prefixes `_next` assets and `<Link>` hrefs on its own, but under
+ * `output: "export"` with `images.unoptimized` it does NOT prefix the `src`
+ * of a `next/image` — that src is emitted verbatim. Anything pointing at a
+ * file in `public/` must therefore be prefixed by hand with this.
+ */
+export const BASE_PATH = process.env.NEXT_PUBLIC_BASE_PATH?.trim().replace(/\/$/, "") ?? "";
+
+/** Builds a URL for a file in `public/`, prefixed for the current deployment. */
+export function assetPath(path: string): string {
+  return `${BASE_PATH}${path.startsWith("/") ? path : `/${path}`}`;
+}
+
 const DEFAULT_SITE_URL = "https://recoveryeurope.com";
 export const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL?.trim() || DEFAULT_SITE_URL).replace(/\/$/, "");

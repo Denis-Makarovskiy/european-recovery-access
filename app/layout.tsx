@@ -40,13 +40,11 @@ export const metadata: Metadata = {
     url: SITE_URL,
     siteName: SITE_NAME,
     type: "website",
-    // No licensed OG image exists yet — omitted rather than pointing at a
-    // fabricated asset. Add one (1200x630) before launch.
+    // app/opengraph-image.png (1200x630) is picked up automatically by
+    // Next's file-based metadata convention.
   },
   twitter: {
-    // "summary_large_image" needs an accompanying image; using "summary"
-    // until a real OG/Twitter image is produced.
-    card: "summary",
+    card: "summary_large_image",
     title: TITLE,
     description: DESCRIPTION,
   },
