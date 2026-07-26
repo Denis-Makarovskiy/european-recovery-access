@@ -84,6 +84,19 @@ export const SCHEDULER_URL = IS_SCHEDULER_CONFIGURED
   ? rawScheduler
   : `#${SECTION_IDS.assessment}`; // TODO(task 2/3): point at the real scheduler once available.
 
+/**
+ * Lead submission endpoint.
+ *
+ * The site is a static export (see next.config.ts) with no server-side route
+ * handler of its own, so lead POSTs go to an external Cloudflare Worker
+ * (see worker/) instead of app/api/lead/route.ts (removed). Defaults to
+ * "/api/lead" so local development against a restored Next.js route handler
+ * would still work unmodified if one is ever added back.
+ */
+const rawLeadEndpoint = process.env.NEXT_PUBLIC_LEAD_ENDPOINT?.trim() ?? "";
+export const IS_LEAD_ENDPOINT_CONFIGURED = rawLeadEndpoint.length > 0;
+export const LEAD_ENDPOINT = IS_LEAD_ENDPOINT_CONFIGURED ? rawLeadEndpoint : "/api/lead";
+
 export const SITE_NAME = "European Recovery Access";
 
 /**

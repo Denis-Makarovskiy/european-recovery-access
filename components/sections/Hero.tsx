@@ -9,7 +9,7 @@ import { Card } from "@/components/ui/Card";
 import { Input } from "@/components/ui/Input";
 import { Select } from "@/components/ui/Select";
 import { Modal } from "@/components/ui/Modal";
-import { ADMISSIONS_PHONE_HREF, SECTION_IDS } from "@/lib/constants";
+import { ADMISSIONS_PHONE_HREF, LEAD_ENDPOINT, SECTION_IDS } from "@/lib/constants";
 import { hero as content, heroForm } from "@/lib/content";
 import { trackCallClick, trackHeroCtaClick, trackLeadSubmit, trackLeadSubmitError } from "@/lib/analytics";
 
@@ -91,7 +91,9 @@ function HeroForm({ idPrefix, surface }: { idPrefix: string; surface: "dark" | "
     setSubmitError(null);
 
     try {
-      const response = await fetch("/api/lead", {
+      // Cross-origin POST to the Cloudflare Worker (see worker/); credentials
+      // are intentionally omitted so no cookies are sent off-origin.
+      const response = await fetch(LEAD_ENDPOINT, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

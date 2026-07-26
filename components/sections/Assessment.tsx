@@ -10,7 +10,7 @@ import { ChoiceChip } from "@/components/ui/ChoiceChip";
 import { Input } from "@/components/ui/Input";
 import { Progress } from "@/components/ui/Progress";
 import { Select } from "@/components/ui/Select";
-import { IS_SCHEDULER_CONFIGURED, SCHEDULER_URL, SECTION_IDS } from "@/lib/constants";
+import { IS_SCHEDULER_CONFIGURED, LEAD_ENDPOINT, SCHEDULER_URL, SECTION_IDS } from "@/lib/constants";
 import { assessment as content } from "@/lib/content";
 import {
   trackAssessmentComplete,
@@ -57,8 +57,9 @@ const DEFAULT_VALUES: AssessmentFormValues = {
 
 /**
  * Client-side UX validation for the wizard. Deliberately separate from
- * lib/validation.ts's `leadSchema`: that schema remains the single
- * server-side source of truth (re-validated in app/api/lead/route.ts); this
+ * lib/validation.ts's `leadSchema`: the lead payload is re-validated
+ * server-side by the Cloudflare Worker in worker/, which keeps its own copy
+ * of that schema and remains the source of truth for what is accepted; this
  * one only drives inline/step-level UX (friendly per-field messages, no
  * honeypot field — that's handled purely server-side).
  */
@@ -326,7 +327,9 @@ export function Assessment() {
     trackAssessmentComplete(analyticsProps);
 
     try {
-      const response = await fetch("/api/lead", {
+      // Cross-origin POST to the Cloudflare Worker (see worker/); credentials
+      // are intentionally omitted so no cookies are sent off-origin.
+      const response = await fetch(LEAD_ENDPOINT, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

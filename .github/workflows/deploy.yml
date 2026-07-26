@@ -1,0 +1,72 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch: {}
+
+# Only one deployment at a time; a newer push cancels an in-progress one
+# rather than queuing behind it.
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build static export
+        run: npm run build
+        env:
+          # Repository (Settings > Secrets and variables > Actions > Variables)
+          # variables required for this build. All are public/client-exposed
+          # values (NEXT_PUBLIC_*), so they belong in `vars`, not `secrets`:
+          #
+          #   NEXT_PUBLIC_LEAD_ENDPOINT   URL of the deployed lead Worker
+          #                               (e.g. https://leads.example.workers.dev)
+          #   NEXT_PUBLIC_BASE_PATH       "/<repo>" for project pages, or empty
+          #                               for a custom domain / user-pages repo
+          #   NEXT_PUBLIC_ADMISSIONS_PHONE  real admissions phone number
+          #   NEXT_PUBLIC_SCHEDULER_URL     external scheduler URL
+          #   NEXT_PUBLIC_GA_ID             GA4 measurement ID (optional)
+          NEXT_PUBLIC_LEAD_ENDPOINT: ${{ vars.NEXT_PUBLIC_LEAD_ENDPOINT }}
+          NEXT_PUBLIC_BASE_PATH: ${{ vars.NEXT_PUBLIC_BASE_PATH }}
+          NEXT_PUBLIC_ADMISSIONS_PHONE: ${{ vars.NEXT_PUBLIC_ADMISSIONS_PHONE }}
+          NEXT_PUBLIC_SCHEDULER_URL: ${{ vars.NEXT_PUBLIC_SCHEDULER_URL }}
+          NEXT_PUBLIC_GA_ID: ${{ vars.NEXT_PUBLIC_GA_ID }}
+
+      - name: Configure Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./out
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

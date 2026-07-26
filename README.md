@@ -62,12 +62,47 @@ npx tsc --noEmit     # type-check
 npm run lint         # ESLint
 ```
 
-### Deployment
+### What's implemented
 
-The app is a standard Next.js App Router project and deploys to any Next.js-compatible host (Vercel, or a Node server via `next build && next start`). Set the environment variables above in the hosting provider before going live, and replace the placeholder domain in `lib/constants.ts` (`SITE_URL`) with the real production domain so canonical/Open Graph URLs are correct.
+- Tailwind v4 theme mapped from `design-tokens.json`, fonts, global metadata and Organization JSON-LD, layout shell (header, footer, mobile sticky bar) and the shared `components/ui/*` primitives.
+- Every section of `02-page-structure.md` except section 10: hero with consultation form, trust strip, why Europe, four-step assessment, how it works, what's included, trust process, suitability, FAQ, final CTA. Section 10 (testimonials) is deliberately absent — no approved copy exists and none may be invented.
+- Lead capture posts to the Cloudflare Worker in `worker/`; the site itself has no server at runtime.
 
-### What's implemented so far
+### Known placeholders
 
-- Project scaffold, Tailwind v4 theme fully mapped from `design-tokens.json`, fonts, global metadata/JSON-LD, layout shell (header, footer, mobile sticky bar), and the shared `components/ui/*` primitives.
-- `app/page.tsx` renders a placeholder `<section>` for every section in `02-page-structure.md`, in order, with the correct `id` so navigation and anchors already work.
-- Not yet implemented (left for subsequent tasks): the actual page sections (`components/sections/*`), the multi-step assessment form, and `app/api/lead/route.ts`.
+`SITE_URL` in `lib/constants.ts`, the admissions phone, the scheduler URL, the privacy and terms copy, and the hero photograph's licensing all still need real values before launch. See `WORKLOG.md` for the current open list.
+
+## Deployment (GitHub Pages)
+
+The app builds to a static export (`output: "export"` in `next.config.ts`) and deploys via `.github/workflows/deploy.yml` on every push to `main` (or manually via `workflow_dispatch`). There is no server at runtime — the lead-capture forms in `components/sections/Hero.tsx` and `components/sections/Assessment.tsx` POST directly to an external Cloudflare Worker instead of a Next.js route handler. That Worker lives in `worker/` and is built and deployed separately (its own CI, its own env/secrets) — it is not part of this static build.
+
+### Required repository variables
+
+Set these under the repo's **Settings > Secrets and variables > Actions > Variables** tab (not Secrets — they are all public, client-exposed `NEXT_PUBLIC_*` values baked into the static build):
+
+| Variable | Purpose |
+| --- | --- |
+| `NEXT_PUBLIC_LEAD_ENDPOINT` | Full URL of the deployed lead-capture Worker, e.g. `https://leads.example.workers.dev`. |
+| `NEXT_PUBLIC_BASE_PATH` | `/<repo-name>` for a GitHub Pages *project* page; empty for a custom domain or a user/organization pages repo. See below. |
+| `NEXT_PUBLIC_ADMISSIONS_PHONE` | Real admissions phone number. |
+| `NEXT_PUBLIC_SCHEDULER_URL` | External call-scheduling URL. |
+| `NEXT_PUBLIC_GA_ID` | GA4 measurement ID (optional; analytics is a no-op if unset). |
+
+### basePath: project pages vs. a custom domain
+
+GitHub Pages serves a repository that isn't a user/organization `*.github.io` repo (or that isn't behind a custom domain) at `https://<user>.github.io/<repo>/` — every route and asset needs a `/<repo>` prefix, or links and `_next` assets 404. `next.config.ts` reads `NEXT_PUBLIC_BASE_PATH` and applies it to both `basePath` and `assetPrefix`.
+
+- **Project pages** (no custom domain): set `NEXT_PUBLIC_BASE_PATH=/<repo-name>`.
+- **Custom domain, or a `<user>.github.io` user/organization pages repo**: leave `NEXT_PUBLIC_BASE_PATH` empty — the site is served from the origin root and needs no prefix.
+
+`public/.nojekyll` is included so GitHub Pages serves the `_next/` directory as-is instead of running it through Jekyll (which ignores underscore-prefixed paths by default).
+
+### Running locally against a local Worker
+
+If you're also running the Worker from `worker/` locally (typically via `wrangler dev`, default port 8787), point the site at it instead of a production endpoint:
+
+```bash
+NEXT_PUBLIC_LEAD_ENDPOINT=http://localhost:8787 npm run dev
+```
+
+Without `NEXT_PUBLIC_LEAD_ENDPOINT` set, the forms fall back to POSTing to `/api/lead`, which no longer exists in this repo (`app/api/lead/route.ts` was removed — see `lib/constants.ts`'s `LEAD_ENDPOINT`/`IS_LEAD_ENDPOINT_CONFIGURED`) and will 404 unless a Worker (or equivalent) is actually reachable at that path.
