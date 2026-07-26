@@ -13,6 +13,13 @@ export interface AccordionItem {
 export interface AccordionProps {
   items: AccordionItem[];
   className?: string;
+  /**
+   * "boxed" — each item is a bordered card with internal padding, matching
+   * design-refs/landing-desktop-mockup.png. "flush" — the bottom-border-only
+   * treatment described in 04-ui-kit.md, for use inside a container that
+   * already provides its own padding.
+   */
+  variant?: "boxed" | "flush";
   /** Called when an item is opened — wire this up to `trackFaqOpen` from lib/analytics.ts. */
   onItemOpen?: (item: AccordionItem) => void;
 }
@@ -23,9 +30,15 @@ export interface AccordionProps {
  * sync, smooth height transition under 220ms, and honours
  * prefers-reduced-motion via framer-motion's `useReducedMotion`.
  */
-export function Accordion({ items, className = "", onItemOpen }: AccordionProps) {
+export function Accordion({ items, className = "", variant = "boxed", onItemOpen }: AccordionProps) {
   const [openId, setOpenId] = useState<string | null>(null);
   const shouldReduceMotion = useReducedMotion();
+  const isBoxed = variant === "boxed";
+
+  const listClasses = isBoxed ? "flex flex-col gap-12" : "";
+  const itemClasses = isBoxed
+    ? "rounded-card border-token-default bg-white px-20 tablet:px-24"
+    : "border-b border-token-default";
 
   function toggle(item: AccordionItem) {
     setOpenId((current) => {
@@ -36,14 +49,14 @@ export function Accordion({ items, className = "", onItemOpen }: AccordionProps)
   }
 
   return (
-    <div className={className}>
+    <div className={`${listClasses} ${className}`.trim()}>
       {items.map((item) => {
         const isOpen = openId === item.id;
         const panelId = `${item.id}-panel`;
         const triggerId = `${item.id}-trigger`;
 
         return (
-          <div key={item.id} className="border-b border-token-default">
+          <div key={item.id} className={itemClasses}>
             <h3 className="text-inherit">
               <button
                 id={triggerId}
@@ -51,7 +64,9 @@ export function Accordion({ items, className = "", onItemOpen }: AccordionProps)
                 aria-expanded={isOpen}
                 aria-controls={panelId}
                 onClick={() => toggle(item)}
-                className="focus-ring flex w-full tap-target items-center justify-between gap-16 py-20 text-left font-sans text-h4 font-weight-semibold text-navy-950"
+                // 04-ui-kit.md specifies an 18px question; body-l (20px) is the
+                // nearest token — h4 (22px) overshot it noticeably.
+                className="focus-ring flex w-full tap-target items-center justify-between gap-16 py-20 text-left font-sans text-body-l font-weight-semibold text-navy-950"
               >
                 <span>{item.question}</span>
                 {isOpen ? (

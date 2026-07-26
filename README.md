@@ -11,7 +11,8 @@ This package contains the complete specification required to build the MVP landi
 5. `05-content-en.md` — production-ready English copy for every section.
 6. `06-interactions-and-analytics.md` — form logic, quiz flow, events and success metrics.
 7. `07-codex-technical-spec.md` — implementation brief for Next.js, TypeScript and Tailwind CSS.
-8. `design-tokens.json` — machine-readable design tokens.
+8. `08-hero-image-brief.md` — generation brief and prompts for the hero background image.
+9. `design-tokens.json` — machine-readable design tokens.
 
 ## MVP principle
 
