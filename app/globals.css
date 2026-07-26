@@ -1,0 +1,280 @@
+@import "tailwindcss";
+
+/* ============================================================================
+ * Design tokens -> Tailwind v4 theme
+ * ----------------------------------------------------------------------------
+ * Every value below is transcribed 1:1 from design-tokens.json. Components
+ * must consume these via Tailwind utilities (bg-navy-900, text-h2, shadow-
+ * card-low, rounded-card, tablet:flex, ...) or, for the few groups Tailwind
+ * has no native utility namespace for (border, size, layout), via the plain
+ * CSS variables declared further down and the small @utility helpers built
+ * on top of them. No component should hardcode a hex, px or rem literal —
+ * if a value is missing here, add it to design-tokens.json first.
+ * ==========================================================================*/
+
+@theme {
+  /* Reset Tailwind's default color palette so only token colors are
+     available as bg-, text- and border- color utilities (prevents e.g. bg-red-500). */
+  --color-*: initial;
+
+  /* ---- color.navy ---- */
+  --color-navy-950: #071a2d;
+  --color-navy-900: #0b2540;
+  --color-navy-800: #123a60;
+  --color-navy-700: #1a4e7a;
+
+  /* ---- color.gold ---- */
+  --color-gold-600: #b9893d;
+  --color-gold-500: #cda55f;
+  --color-gold-300: #e5c996;
+  --color-gold-100: #f6eedc;
+
+  /* ---- color.neutral ---- */
+  --color-ink: #15202b;
+  --color-slate-700: #4d5b6a;
+  --color-slate-500: #728091;
+  --color-slate-300: #c9d0d8;
+  --color-slate-200: #e1e6eb;
+  --color-slate-100: #f1f4f7;
+  --color-off-white: #f8fafc;
+  --color-white: #ffffff;
+
+  /* ---- color.semantic ---- */
+  --color-success: #2f7a5c;
+  --color-warning: #a56a21;
+  --color-error: #b64040;
+  --color-focus: rgba(205, 165, 95, 0.35);
+
+  /* CSS-level keywords Tailwind's utilities depend on regardless of palette. */
+  --color-transparent: transparent;
+  --color-current: currentColor;
+  --color-black: #000000;
+
+  /* ---- font ---- */
+  --font-sans: var(--font-inter), sans-serif;
+  --font-serif: var(--font-source-serif-4), serif;
+
+  /* ---- fontSize + lineHeight (paired) ----
+     Reset Tailwind's default size scale (text-xs..text-9xl) — use the named
+     sizes below exclusively so type always traces back to a token. h4,
+     eyebrow and button have no paired lineHeight in design-tokens.json, so
+     none is set for them here (matches the source of truth exactly). */
+  --text-*: initial;
+  --text-display-xl: 68px;
+  --text-display-xl--line-height: 72px;
+  --text-display-l: 56px;
+  --text-display-l--line-height: 62px;
+  --text-h1-mobile: 46px;
+  --text-h1-mobile--line-height: 50px;
+  --text-h2: 40px;
+  --text-h2--line-height: 48px;
+  --text-h3: 28px;
+  --text-h3--line-height: 36px;
+  --text-h4: 22px;
+  --text-body-l: 20px;
+  --text-body-l--line-height: 32px;
+  --text-body: 17px;
+  --text-body--line-height: 28px;
+  --text-body-s: 15px;
+  --text-body-s--line-height: 24px;
+  --text-label: 14px;
+  --text-label--line-height: 20px;
+  --text-eyebrow: 13px;
+  --text-button: 16px;
+
+  /* ---- fontWeight ---- */
+  --font-weight-*: initial;
+  --font-weight-regular: 400;
+  --font-weight-semibold: 600;
+  --font-weight-button: 650;
+  --font-weight-bold: 700;
+
+  /* ---- letterSpacing ---- */
+  --tracking-*: initial;
+  --tracking-eyebrow: 0.08em;
+  --tracking-normal: 0em;
+
+  /* ---- radius ---- */
+  --radius-*: initial;
+  --radius-sm: 8px;
+  --radius-control: 10px;
+  --radius-card: 16px;
+  --radius-panel: 24px;
+  --radius-pill: 999px;
+
+  /* ---- shadow ---- */
+  --shadow-*: initial;
+  --shadow-card-low: 0 8px 24px rgba(7, 26, 45, 0.08);
+  --shadow-card-high: 0 20px 60px rgba(7, 26, 45, 0.14);
+  --shadow-header: 0 4px 18px rgba(7, 26, 45, 0.06);
+
+  /* ---- breakpoint ---- */
+  --breakpoint-*: initial;
+  --breakpoint-mobile: 375px;
+  --breakpoint-tablet: 768px;
+  --breakpoint-desktop-small: 1024px;
+  --breakpoint-desktop: 1280px;
+  --breakpoint-desktop-large: 1440px;
+}
+
+/* ============================================================================
+ * Token groups without a native Tailwind theme namespace: border, size,
+ * layout, space. Exposed as plain CSS custom properties so they can be
+ * consumed with Tailwind v4's var()-shorthand arbitrary values, e.g.
+ * `h-(--size-control)`, `max-w-(--layout-container-max)`, or through the
+ * small @utility helpers defined below.
+ * ==========================================================================*/
+:root {
+  /* ---- space ---- */
+  --space-2: 2px;
+  --space-4: 4px;
+  --space-8: 8px;
+  --space-12: 12px;
+  --space-16: 16px;
+  --space-20: 20px;
+  --space-24: 24px;
+  --space-32: 32px;
+  --space-40: 40px;
+  --space-48: 48px;
+  --space-64: 64px;
+  --space-80: 80px;
+  --space-104: 104px;
+  --space-128: 128px;
+
+  /* ---- border ---- */
+  --border-default: 1px solid #e1e6eb;
+  --border-interactive: 1px solid #c9d0d8;
+  --border-selected: 1.5px solid #b9893d;
+  --border-focus-ring-width: 3px;
+
+  /* ---- size ---- */
+  --size-control: 52px;
+  --size-control-mobile: 54px;
+  --size-chip-min: 48px;
+  --size-tap-target-min: 44px;
+  --size-icon-circle: 56px;
+  --size-hero-min-height: 720px;
+  --size-form-card-min: 440px;
+  --size-form-card-max: 480px;
+
+  /* ---- layout ---- */
+  --layout-container-max: 1240px;
+  --layout-desktop-artboard: 1440px;
+  --layout-grid-columns: 12;
+  --layout-grid-gutter: 24px;
+  --layout-header-height: 80px;
+}
+
+/* Also expose the same spacing scale to Tailwind's spacing utilities
+   (p-24, gap-16, m-40, ...) so layout code never repeats raw px values. */
+@theme {
+  --spacing-2: 2px;
+  --spacing-4: 4px;
+  --spacing-8: 8px;
+  --spacing-12: 12px;
+  --spacing-16: 16px;
+  --spacing-20: 20px;
+  --spacing-24: 24px;
+  --spacing-32: 32px;
+  --spacing-40: 40px;
+  --spacing-48: 48px;
+  --spacing-64: 64px;
+  --spacing-80: 80px;
+  --spacing-104: 104px;
+  --spacing-128: 128px;
+}
+
+/* ============================================================================
+ * Base styles
+ * ==========================================================================*/
+html {
+  scroll-behavior: smooth;
+  /* Keep sticky-header anchor targets from being hidden underneath it. */
+  scroll-padding-top: var(--layout-header-height);
+}
+
+body {
+  background: var(--color-off-white);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  font-size: var(--text-body);
+  line-height: var(--text-body--line-height);
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+  background: var(--color-gold-300);
+  color: var(--color-navy-950);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ============================================================================
+ * Small token-backed utilities for groups Tailwind can't express natively.
+ * ==========================================================================*/
+@utility container-max {
+  width: 100%;
+  max-width: var(--layout-container-max);
+  margin-inline: auto;
+  padding-inline: var(--space-24);
+}
+
+@utility tap-target {
+  min-height: var(--size-tap-target-min);
+  min-width: var(--size-tap-target-min);
+}
+
+@utility border-token-default {
+  border: var(--border-default);
+}
+
+@utility border-token-interactive {
+  border: var(--border-interactive);
+}
+
+@utility border-token-selected {
+  border: var(--border-selected);
+}
+
+/* Shared visible focus ring, WCAG AA compliant (3px gold ring, per 04-ui-kit.md). */
+@utility focus-ring {
+  outline: none;
+
+  &:focus-visible {
+    outline: var(--border-focus-ring-width) solid var(--color-focus);
+    outline-offset: 2px;
+  }
+}
+
+/* iOS safe-area padding for the mobile sticky bar, layered on top of the
+   space-16 token rather than a bare env() call in components. */
+@utility safe-bottom {
+  padding-bottom: calc(var(--space-16) + env(safe-area-inset-bottom));
+}
+
+/* TODO(hero section, later task): no licensed hero photograph exists yet.
+   Use this token-based navy gradient as the hero background until a real
+   image (per 02-page-structure.md — "calm European clinical or residential
+   setting", no beach/nightlife/spa cues) is licensed and swapped in via
+   next/image. Do not fabricate/download a placeholder photo. */
+@utility hero-gradient-placeholder {
+  background-image: linear-gradient(
+    115deg,
+    var(--color-navy-950) 0%,
+    var(--color-navy-900) 45%,
+    var(--color-navy-800) 100%
+  );
+}
