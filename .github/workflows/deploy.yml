@@ -46,6 +46,11 @@ jobs:
           #   NEXT_PUBLIC_ADMISSIONS_PHONE  real admissions phone number
           #   NEXT_PUBLIC_SCHEDULER_URL     external scheduler URL
           #   NEXT_PUBLIC_GA_ID             GA4 measurement ID (optional)
+          #   NEXT_PUBLIC_YM_ID             Yandex Metrica counter number (optional)
+          #   NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION  Google Search Console HTML
+          #                               tag verification content (optional)
+          #   NEXT_PUBLIC_YANDEX_VERIFICATION       Yandex Webmaster meta tag
+          #                               verification content (optional)
           NEXT_PUBLIC_LEAD_ENDPOINT: ${{ vars.NEXT_PUBLIC_LEAD_ENDPOINT }}
           NEXT_PUBLIC_BASE_PATH: ${{ vars.NEXT_PUBLIC_BASE_PATH }}
           # Canonical origin. Set while the site still lives on github.io;
@@ -54,6 +59,9 @@ jobs:
           NEXT_PUBLIC_ADMISSIONS_PHONE: ${{ vars.NEXT_PUBLIC_ADMISSIONS_PHONE }}
           NEXT_PUBLIC_SCHEDULER_URL: ${{ vars.NEXT_PUBLIC_SCHEDULER_URL }}
           NEXT_PUBLIC_GA_ID: ${{ vars.NEXT_PUBLIC_GA_ID }}
+          NEXT_PUBLIC_YM_ID: ${{ vars.NEXT_PUBLIC_YM_ID }}
+          NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION: ${{ vars.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION }}
+          NEXT_PUBLIC_YANDEX_VERIFICATION: ${{ vars.NEXT_PUBLIC_YANDEX_VERIFICATION }}
 
       - name: Configure Pages
         uses: actions/configure-pages@v5

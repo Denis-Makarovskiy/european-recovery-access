@@ -7,21 +7,28 @@
  * - Properties are restricted to the allow-listed, non-identifying keys in
  *   `AnalyticsProperties` — never pass names, phone numbers, emails or
  *   clinical free text. `sanitizeProperties` also strips/truncates at
- *   runtime as a second line of defense against accidental misuse.
+ *   runtime as a second line of defense against accidental misuse. This
+ *   applies equally to both analytics sinks below (GA4 and Yandex Metrica).
  * - When `NEXT_PUBLIC_GA_ID` is unset, or `window.gtag` is unavailable
  *   (e.g. server-side, ad blockers, before the script loads), every call
  *   is a no-op.
+ * - Same rule for Yandex Metrica: when `NEXT_PUBLIC_YM_ID` is unset, or
+ *   `window.ym` is unavailable, every call is a no-op.
  */
 
 declare global {
   interface Window {
     dataLayer?: unknown[];
     gtag?: (...args: unknown[]) => void;
+    ym?: (counterId: number, action: string, ...rest: unknown[]) => void;
   }
 }
 
 export const GA_ID = process.env.NEXT_PUBLIC_GA_ID?.trim() ?? "";
 export const IS_ANALYTICS_CONFIGURED = GA_ID.length > 0;
+
+export const YM_ID = process.env.NEXT_PUBLIC_YM_ID?.trim() ?? "";
+export const IS_YM_CONFIGURED = YM_ID.length > 0;
 
 export type AnalyticsEventName =
   | "page_view"
@@ -87,9 +94,16 @@ function sanitizeProperties(properties?: AnalyticsProperties): Record<string, st
 
 /** Low-level event dispatcher. Prefer the named helpers below in components. */
 export function trackEvent(name: AnalyticsEventName, properties?: AnalyticsProperties): void {
-  if (!IS_ANALYTICS_CONFIGURED) return;
-  if (typeof window === "undefined" || typeof window.gtag !== "function") return;
-  window.gtag("event", name, sanitizeProperties(properties));
+  if (typeof window === "undefined") return;
+  const clean = sanitizeProperties(properties);
+
+  if (IS_ANALYTICS_CONFIGURED && typeof window.gtag === "function") {
+    window.gtag("event", name, clean);
+  }
+
+  if (IS_YM_CONFIGURED && typeof window.ym === "function") {
+    window.ym(Number(YM_ID), "reachGoal", name, clean);
+  }
 }
 
 export const trackPageView = (properties?: AnalyticsProperties) => trackEvent("page_view", properties);

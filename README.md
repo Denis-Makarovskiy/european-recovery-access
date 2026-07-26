@@ -45,12 +45,12 @@ Open http://localhost:3000.
 
 See `.env.example`. None are required to run the app locally — phone/scheduler links fall back to clearly-marked placeholders (`lib/constants.ts`) and analytics becomes a no-op when `NEXT_PUBLIC_GA_ID` is unset.
 
+Lead delivery is configured in `worker/`, not here — the site has no server at runtime.
+
 | Variable | Purpose |
 | --- | --- |
-| `LEAD_WEBHOOK_URL` | Server-side webhook the `/api/lead` route (added in a later task) posts leads to. |
-| `RESEND_API_KEY` | API key if lead delivery goes through Resend instead of/alongside the webhook. |
-| `ADMISSIONS_EMAIL` | Inbox that should receive lead notifications. |
-| `NEXT_PUBLIC_ADMISSIONS_PHONE` | Real admissions phone number, e.g. `+1 833 123 4567`. |
+| `NEXT_PUBLIC_LEAD_ENDPOINT` | URL of the deployed lead Worker; falls back to `/api/lead`, which no longer exists. |
+| `NEXT_PUBLIC_ADMISSIONS_PHONE` | Overrides the admissions phone number baked into `lib/constants.ts`. |
 | `NEXT_PUBLIC_SCHEDULER_URL` | External call-scheduling URL (e.g. Calendly). |
 | `NEXT_PUBLIC_GA_ID` | GA4 measurement ID; leave empty to disable analytics entirely. |
 
@@ -87,6 +87,9 @@ Set these under the repo's **Settings > Secrets and variables > Actions > Variab
 | `NEXT_PUBLIC_ADMISSIONS_PHONE` | Real admissions phone number. |
 | `NEXT_PUBLIC_SCHEDULER_URL` | External call-scheduling URL. |
 | `NEXT_PUBLIC_GA_ID` | GA4 measurement ID (optional; analytics is a no-op if unset). |
+| `NEXT_PUBLIC_YM_ID` | Yandex Metrica counter number (optional; Metrica is a no-op if unset). |
+| `NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION` | Google Search Console HTML-tag verification content (optional; tag is omitted if unset). |
+| `NEXT_PUBLIC_YANDEX_VERIFICATION` | Yandex Webmaster meta-tag verification content (optional; tag is omitted if unset). |
 
 ### basePath: project pages vs. a custom domain
 
@@ -96,6 +99,15 @@ GitHub Pages serves a repository that isn't a user/organization `*.github.io` re
 - **Custom domain, or a `<user>.github.io` user/organization pages repo**: leave `NEXT_PUBLIC_BASE_PATH` empty — the site is served from the origin root and needs no prefix.
 
 `public/.nojekyll` is included so GitHub Pages serves the `_next/` directory as-is instead of running it through Jekyll (which ignores underscore-prefixed paths by default).
+
+### Analytics and search console verification
+
+Each of these is enabled independently by setting the matching repository variable (see the table above); leave any of them empty to keep that feature off.
+
+- **GA4** — set `NEXT_PUBLIC_GA_ID`.
+- **Yandex Metrica** — set `NEXT_PUBLIC_YM_ID`. Metrica's Webvisor session-replay feature is deliberately hard-disabled in `components/analytics/YandexMetrica.tsx` regardless of env vars, because it would record keystrokes in this site's forms, which collect names, phone numbers and health-related answers about a person's addiction.
+- **Google Search Console** — set `NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION` to the `content` value of the HTML-tag verification method.
+- **Yandex Webmaster** — set `NEXT_PUBLIC_YANDEX_VERIFICATION` to the `content` value of its meta-tag verification method.
 
 ### Running locally against a local Worker
 

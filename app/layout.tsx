@@ -7,6 +7,7 @@ import { Footer } from "@/components/layout/Footer";
 import { MobileStickyBar } from "@/components/layout/MobileStickyBar";
 import { SITE_NAME, SITE_URL, ADMISSIONS_PHONE_DISPLAY } from "@/lib/constants";
 import { GA_ID, IS_ANALYTICS_CONFIGURED } from "@/lib/analytics";
+import { YandexMetrica } from "@/components/analytics/YandexMetrica";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -49,6 +50,13 @@ export const metadata: Metadata = {
     title: TITLE,
     description: DESCRIPTION,
   },
+  // Search console ownership verification. Next only renders each meta tag
+  // when its value is defined, so these are absent from the page until the
+  // corresponding env var is set.
+  verification: {
+    google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION || undefined,
+    yandex: process.env.NEXT_PUBLIC_YANDEX_VERIFICATION || undefined,
+  },
 };
 
 const organizationJsonLd = {
@@ -80,6 +88,7 @@ export default function RootLayout({
         <main className="flex-1 pb-104 pt-(--layout-header-height) tablet:pb-0">{children}</main>
         <Footer />
         <MobileStickyBar />
+        <YandexMetrica />
         {IS_ANALYTICS_CONFIGURED && (
           <>
             <Script src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`} strategy="afterInteractive" />
