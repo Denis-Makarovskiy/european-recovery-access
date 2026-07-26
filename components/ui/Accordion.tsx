@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { Minus, Plus } from "lucide-react";
 
 export interface AccordionItem {
@@ -28,11 +27,30 @@ export interface AccordionProps {
  * Accessible accordion (04-ui-kit.md "Accordion" + 07-codex-technical-spec.md
  * "FAQ"): only one item open at a time, aria-expanded/aria-controls kept in
  * sync, smooth height transition under 220ms, and honours
- * prefers-reduced-motion via framer-motion's `useReducedMotion`.
+ * prefers-reduced-motion.
+ *
+ * Previously animated the open/close height with framer-motion
+ * (AnimatePresence + motion.div animating height: 0 -> "auto"). That was
+ * this repo's only other use of framer-motion besides Modal.tsx (see that
+ * file's doc comment), so replacing both drops the dependency out of the
+ * bundle entirely. Plain CSS can't transition to/from `height: auto`
+ * directly, so this uses the standard CSS Grid workaround instead: a
+ * `grid-template-rows: 0fr` -> `1fr` transition on the wrapper, which lets
+ * the browser interpolate the *track* size against the panel's actual
+ * content height without ever having to read/measure it in JS. The
+ * previously-conditionally-mounted panel is now always in the DOM (so it can
+ * transition rather than pop in/out) but is `aria-hidden` and clipped via
+ * `overflow-hidden` while closed, keeping it out of the accessibility tree
+ * and tab order exactly as when it was unmounted — screen-reader/keyboard
+ * behavior is unchanged, only the always-present static HTML is new (a
+ * incidental accessibility/SEO improvement: closed answers are now in the
+ * static markup, just visually collapsed, instead of absent).
+ * prefers-reduced-motion is honoured for free: app/globals.css already
+ * forces every transition-duration to 0.01ms under that media query, so no
+ * separate JS check is needed here.
  */
 export function Accordion({ items, className = "", variant = "boxed", onItemOpen }: AccordionProps) {
   const [openId, setOpenId] = useState<string | null>(null);
-  const shouldReduceMotion = useReducedMotion();
   const isBoxed = variant === "boxed";
 
   const listClasses = isBoxed ? "flex flex-col gap-12" : "";
@@ -76,22 +94,18 @@ export function Accordion({ items, className = "", variant = "boxed", onItemOpen
                 )}
               </button>
             </h3>
-            <AnimatePresence initial={false}>
-              {isOpen && (
-                <motion.div
-                  id={panelId}
-                  role="region"
-                  aria-labelledby={triggerId}
-                  initial={{ height: 0, opacity: 0 }}
-                  animate={{ height: "auto", opacity: 1 }}
-                  exit={{ height: 0, opacity: 0 }}
-                  transition={{ duration: shouldReduceMotion ? 0 : 0.2, ease: "easeInOut" }}
-                  className="overflow-hidden"
-                >
-                  <p className="pb-20 pt-4 font-sans text-body text-slate-700">{item.answer}</p>
-                </motion.div>
-              )}
-            </AnimatePresence>
+            <div
+              id={panelId}
+              role="region"
+              aria-labelledby={triggerId}
+              aria-hidden={!isOpen}
+              className="grid overflow-hidden transition-[grid-template-rows] duration-200 ease-in-out"
+              style={{ gridTemplateRows: isOpen ? "1fr" : "0fr" }}
+            >
+              <div className="min-h-0 overflow-hidden">
+                <p className="pb-20 pt-4 font-sans text-body text-slate-700">{item.answer}</p>
+              </div>
+            </div>
           </div>
         );
       })}

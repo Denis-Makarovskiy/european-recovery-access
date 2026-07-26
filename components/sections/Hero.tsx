@@ -1,7 +1,6 @@
 "use client";
 
 import { useId, useState } from "react";
-import Image from "next/image";
 import { useForm } from "react-hook-form";
 import { Check, Lock, Phone } from "lucide-react";
 import { Button, ButtonLink } from "@/components/ui/Button";
@@ -268,16 +267,41 @@ export function Hero() {
     >
       {/* Hero photograph per 08-hero-image-brief.md, variant A. The gradient
           utility on the section stays as the loading background, so there is
-          no flash of empty navy before the image decodes. */}
-      <Image
-        src={assetPath("/images/hero-2560.avif")}
-        alt=""
-        aria-hidden
-        fill
-        priority
-        sizes="100vw"
-        className="absolute inset-0 -z-20 object-cover object-right"
-      />
+          no flash of empty navy before the image decodes.
+
+          images.unoptimized is on (next.config.ts) so next/image emits `src`
+          verbatim and generates no real srcset — it would serve the 2560w
+          asset to every viewport. Hand-rolled <picture>/<img> instead: two
+          width descriptors (1280/2560, matching the pre-built variants in
+          public/images) let the browser pick per effective viewport width
+          (sizes="100vw") and DPR, same selection next/image's own srcset
+          would make if the optimizer were available. AVIF then WebP source
+          order, `fill`-equivalent absolute/inset/object-cover classes keep
+          the layout identical (CLS 0), fetchpriority+decoding preserve LCP
+          priority. Paths must go through assetPath() — see its doc comment
+          in lib/constants.ts for why a raw "/images/..." path 404s here. */}
+      <picture>
+        <source
+          type="image/avif"
+          srcSet={`${assetPath("/images/hero-1280.avif")} 1280w, ${assetPath("/images/hero-2560.avif")} 2560w`}
+          sizes="100vw"
+        />
+        <source
+          type="image/webp"
+          srcSet={`${assetPath("/images/hero-1280.webp")} 1280w, ${assetPath("/images/hero-2560.webp")} 2560w`}
+          sizes="100vw"
+        />
+        <img
+          src={assetPath("/images/hero-2560.avif")}
+          alt=""
+          aria-hidden
+          width={2560}
+          height={1441}
+          fetchPriority="high"
+          decoding="async"
+          className="absolute inset-0 -z-20 h-full w-full object-cover object-right"
+        />
+      </picture>
       <div aria-hidden className="hero-photo-overlay absolute inset-0 -z-10" />
       <div className="container-max relative grid grid-cols-1 items-center gap-40 desktop-small:grid-cols-12 desktop-small:gap-24">
         <div className="desktop-small:col-span-7">
