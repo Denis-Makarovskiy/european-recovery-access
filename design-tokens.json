@@ -1,0 +1,130 @@
+{
+  "color": {
+    "navy": {
+      "950": "#071A2D",
+      "900": "#0B2540",
+      "800": "#123A60",
+      "700": "#1A4E7A"
+    },
+    "gold": {
+      "600": "#B9893D",
+      "500": "#CDA55F",
+      "300": "#E5C996",
+      "100": "#F6EEDC"
+    },
+    "neutral": {
+      "ink": "#15202B",
+      "slate700": "#4D5B6A",
+      "slate500": "#728091",
+      "slate300": "#C9D0D8",
+      "slate200": "#E1E6EB",
+      "slate100": "#F1F4F7",
+      "offWhite": "#F8FAFC",
+      "white": "#FFFFFF"
+    },
+    "semantic": {
+      "success": "#2F7A5C",
+      "warning": "#A56A21",
+      "error": "#B64040",
+      "focus": "rgba(205,165,95,0.35)"
+    }
+  },
+  "font": {
+    "sans": "Inter, sans-serif",
+    "serif": "Source Serif 4, serif"
+  },
+  "fontSize": {
+    "displayXL": "68px",
+    "displayL": "56px",
+    "h1Mobile": "46px",
+    "h2": "40px",
+    "h3": "28px",
+    "h4": "22px",
+    "bodyL": "20px",
+    "body": "17px",
+    "bodyS": "15px",
+    "label": "14px",
+    "eyebrow": "13px",
+    "button": "16px"
+  },
+  "lineHeight": {
+    "displayXL": "72px",
+    "displayL": "62px",
+    "h1Mobile": "50px",
+    "h2": "48px",
+    "h3": "36px",
+    "h4": "30px",
+    "bodyL": "32px",
+    "body": "28px",
+    "bodyS": "24px",
+    "label": "20px"
+  },
+  "fontWeight": {
+    "regular": 400,
+    "semibold": 600,
+    "button": 650,
+    "bold": 700
+  },
+  "letterSpacing": {
+    "eyebrow": "0.08em",
+    "normal": "0"
+  },
+  "border": {
+    "default": "1px solid #E1E6EB",
+    "interactive": "1px solid #C9D0D8",
+    "selected": "1.5px solid #B9893D",
+    "focusRingWidth": "3px"
+  },
+  "size": {
+    "control": "52px",
+    "controlMobile": "54px",
+    "chipMin": "48px",
+    "tapTargetMin": "44px",
+    "iconCircle": "56px",
+    "heroMinHeight": "720px",
+    "formCardMin": "440px",
+    "formCardMax": "480px"
+  },
+  "space": {
+    "2": "2px",
+    "4": "4px",
+    "8": "8px",
+    "12": "12px",
+    "16": "16px",
+    "20": "20px",
+    "24": "24px",
+    "32": "32px",
+    "40": "40px",
+    "48": "48px",
+    "64": "64px",
+    "80": "80px",
+    "104": "104px",
+    "128": "128px"
+  },
+  "radius": {
+    "sm": "8px",
+    "control": "10px",
+    "card": "16px",
+    "panel": "24px",
+    "pill": "999px"
+  },
+  "shadow": {
+    "cardLow": "0 8px 24px rgba(7, 26, 45, 0.08)",
+    "cardHigh": "0 20px 60px rgba(7, 26, 45, 0.14)",
+    "header": "0 4px 18px rgba(7, 26, 45, 0.06)"
+  },
+  "layout": {
+    "containerMax": "1240px",
+    "desktopArtboard": "1440px",
+    "gridColumns": 12,
+    "gridGutter": "24px",
+    "headerHeight": "80px"
+  },
+  "breakpoint": {
+    "mobile": "375px",
+    "tablet": "768px",
+    "desktopSmall": "1024px",
+    "desktop": "1280px",
+    "desktopLarge": "1440px"
+  }
+}
