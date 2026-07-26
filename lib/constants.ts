@@ -55,20 +55,15 @@ export const NAV_ITEMS: NavItem[] = [
 /**
  * Admissions phone number.
  *
- * No real number exists yet. NEXT_PUBLIC_ADMISSIONS_PHONE is empty in
- * .env.example on purpose — until it is set, the UI must show an obvious
- * placeholder rather than a fabricated number. `IS_PHONE_CONFIGURED` lets
- * components decide whether to disable/hide the "Call Admissions" action.
+ * The US admissions line is baked in as the default so the number is correct
+ * even when NEXT_PUBLIC_ADMISSIONS_PHONE is not set in the build environment.
+ * Setting that variable overrides it — useful for staging or a per-campaign
+ * tracking number. The number is public by design; it is printed on the page.
  */
-const rawPhone = process.env.NEXT_PUBLIC_ADMISSIONS_PHONE?.trim() ?? "";
-export const IS_PHONE_CONFIGURED = rawPhone.length > 0;
-export const ADMISSIONS_PHONE_DISPLAY = IS_PHONE_CONFIGURED
-  ? rawPhone
-  : "+1 (000) 000-0000"; // TODO(task 2/3): replace once a real admissions line is provisioned.
-export const ADMISSIONS_PHONE_HREF = `tel:${(IS_PHONE_CONFIGURED ? rawPhone : "+10000000000").replace(
-  /[^\d+]/g,
-  "",
-)}`;
+const DEFAULT_ADMISSIONS_PHONE = "+1 (478) 309-7957";
+const rawPhone = process.env.NEXT_PUBLIC_ADMISSIONS_PHONE?.trim() || DEFAULT_ADMISSIONS_PHONE;
+export const ADMISSIONS_PHONE_DISPLAY = rawPhone;
+export const ADMISSIONS_PHONE_HREF = `tel:${rawPhone.replace(/[^\d+]/g, "")}`;
 
 /**
  * Scheduler (e.g. Calendly-style booking) URL.

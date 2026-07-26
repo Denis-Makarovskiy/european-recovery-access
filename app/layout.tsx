@@ -5,7 +5,7 @@ import "./globals.css";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { MobileStickyBar } from "@/components/layout/MobileStickyBar";
-import { SITE_NAME, SITE_URL, IS_PHONE_CONFIGURED, ADMISSIONS_PHONE_DISPLAY } from "@/lib/constants";
+import { SITE_NAME, SITE_URL, ADMISSIONS_PHONE_DISPLAY } from "@/lib/constants";
 import { GA_ID, IS_ANALYTICS_CONFIGURED } from "@/lib/analytics";
 
 const inter = Inter({
@@ -57,9 +57,8 @@ const organizationJsonLd = {
   name: SITE_NAME,
   url: SITE_URL,
   description: DESCRIPTION,
-  // Only publish a phone number in structured data once a real one is
-  // configured — never the visible placeholder number.
-  ...(IS_PHONE_CONFIGURED ? { telephone: ADMISSIONS_PHONE_DISPLAY } : {}),
+  telephone: ADMISSIONS_PHONE_DISPLAY,
+  areaServed: ["US", "CA"],
   // FAQPage schema is intentionally omitted here: 07-codex-technical-spec.md
   // only allows it once it exactly matches the visible FAQ content, and the
   // FAQ section itself hasn't been built yet.
