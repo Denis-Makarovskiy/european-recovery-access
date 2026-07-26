@@ -95,11 +95,13 @@ export const LEAD_ENDPOINT = IS_LEAD_ENDPOINT_CONFIGURED ? rawLeadEndpoint : "/a
 export const SITE_NAME = "European Recovery Access";
 
 /**
- * Canonical origin placeholder.
+ * Canonical origin, used for metadataBase, canonical links, Open Graph and
+ * the Organization JSON-LD (see app/layout.tsx).
  *
- * No production domain has been registered/confirmed yet. This is not an
- * env var from 07-codex-technical-spec.md — it is a deliberate literal
- * placeholder to swap for the real domain before launch (see app/layout.tsx
- * metadataBase / canonical usage).
+ * The production domain is recoveryeurope.com. Until its DNS is pointed at
+ * GitHub Pages the site is still served from the github.io project URL, so
+ * this is overridable per build: set NEXT_PUBLIC_SITE_URL as a repository
+ * variable to switch canonical URLs over without a code change.
  */
-export const SITE_URL = "https://www.example-placeholder.com"; // TODO: replace with the real production domain.
+const DEFAULT_SITE_URL = "https://recoveryeurope.com";
+export const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL?.trim() || DEFAULT_SITE_URL).replace(/\/$/, "");

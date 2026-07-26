@@ -48,6 +48,9 @@ jobs:
           #   NEXT_PUBLIC_GA_ID             GA4 measurement ID (optional)
           NEXT_PUBLIC_LEAD_ENDPOINT: ${{ vars.NEXT_PUBLIC_LEAD_ENDPOINT }}
           NEXT_PUBLIC_BASE_PATH: ${{ vars.NEXT_PUBLIC_BASE_PATH }}
+          # Canonical origin. Set while the site still lives on github.io;
+          # clear it once recoveryeurope.com is the live domain.
+          NEXT_PUBLIC_SITE_URL: ${{ vars.NEXT_PUBLIC_SITE_URL }}
           NEXT_PUBLIC_ADMISSIONS_PHONE: ${{ vars.NEXT_PUBLIC_ADMISSIONS_PHONE }}
           NEXT_PUBLIC_SCHEDULER_URL: ${{ vars.NEXT_PUBLIC_SCHEDULER_URL }}
           NEXT_PUBLIC_GA_ID: ${{ vars.NEXT_PUBLIC_GA_ID }}
