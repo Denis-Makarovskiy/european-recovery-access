@@ -1,6 +1,7 @@
 "use client";
 
 import { useId, useState } from "react";
+import Image from "next/image";
 import { useForm } from "react-hook-form";
 import { Check, Lock, Phone } from "lucide-react";
 import { Button, ButtonLink } from "@/components/ui/Button";
@@ -263,9 +264,19 @@ export function Hero() {
       aria-labelledby={headingId}
       className="hero-gradient-placeholder relative isolate min-h-(--size-hero-min-height) overflow-hidden py-64 tablet:py-80"
     >
-      {/* TODO: swap for a licensed next/image photo (calm European clinical/
-          residential setting; mountain, lake or countryside; no beach,
-          nightlife or spa cues) once one is available, per 02-page-structure.md. */}
+      {/* Hero photograph per 08-hero-image-brief.md, variant A. The gradient
+          utility on the section stays as the loading background, so there is
+          no flash of empty navy before the image decodes. */}
+      <Image
+        src="/images/hero-2560.avif"
+        alt=""
+        aria-hidden
+        fill
+        priority
+        sizes="100vw"
+        className="absolute inset-0 -z-20 object-cover object-right"
+      />
+      <div aria-hidden className="hero-photo-overlay absolute inset-0 -z-10" />
       <div className="container-max relative grid grid-cols-1 items-center gap-40 desktop-small:grid-cols-12 desktop-small:gap-24">
         <div className="desktop-small:col-span-7">
           <p className="font-sans text-eyebrow font-weight-bold uppercase tracking-eyebrow text-gold-300">

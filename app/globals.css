@@ -278,3 +278,23 @@ body {
     var(--color-navy-800) 100%
   );
 }
+
+/* Overlay laid over the hero photograph: heavy navy on the left so the
+   display headline stays legible, easing off to the right where the
+   photograph's subject sits. Per 02-page-structure.md, "dark navy overlay
+   from left and light darkening across the full image". */
+@utility hero-photo-overlay {
+  background-image:
+    linear-gradient(
+      90deg,
+      color-mix(in srgb, var(--color-navy-950) 82%, transparent) 0%,
+      color-mix(in srgb, var(--color-navy-950) 58%, transparent) 34%,
+      color-mix(in srgb, var(--color-navy-950) 22%, transparent) 62%,
+      color-mix(in srgb, var(--color-navy-950) 10%, transparent) 100%
+    ),
+    linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--color-navy-950) 22%, transparent) 0%,
+      transparent 40%
+    );
+}
