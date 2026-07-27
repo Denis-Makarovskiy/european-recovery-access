@@ -9,6 +9,33 @@ import { Suitability } from "@/components/sections/Suitability";
 import { Scenarios } from "@/components/sections/Scenarios";
 import { FAQ } from "@/components/sections/FAQ";
 import { FinalCTA } from "@/components/sections/FinalCTA";
+import { faq as faqContent } from "@/lib/content";
+
+/**
+ * FAQPage schema lives HERE, not in app/layout.tsx: Google's guidance only
+ * permits FAQ structured data on pages where the FAQ content is actually
+ * visible, and the accordion renders on this page alone. Generated from the
+ * same `faq` array the accordion uses, so markup and visible text cannot
+ * drift (07-codex-technical-spec.md requires exact correspondence).
+ * `stripHtml` is defensive — the copy carries no markup today, but the
+ * emitted JSON-LD must never contain any if that changes.
+ */
+function stripHtml(value: string): string {
+  return value.replace(/<[^>]*>/g, "").trim();
+}
+
+const faqJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: faqContent.map((item) => ({
+    "@type": "Question",
+    name: stripHtml(item.question),
+    acceptedAnswer: {
+      "@type": "Answer",
+      text: stripHtml(item.answer),
+    },
+  })),
+};
 
 /**
  * Section 5 ("Interactive Assessment") pulls in react-hook-form, zod and its
@@ -29,6 +56,10 @@ const Assessment = dynamic(() => import("@/components/sections/Assessment").then
 export default function Home() {
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
+      />
       <Hero />
       <TrustStrip />
       <WhyEurope />

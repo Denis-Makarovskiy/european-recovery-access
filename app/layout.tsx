@@ -8,7 +8,6 @@ import { MobileStickyBar } from "@/components/layout/MobileStickyBar";
 import { SITE_NAME, SITE_URL, ADMISSIONS_PHONE_DISPLAY } from "@/lib/constants";
 import { GA_ID, IS_ANALYTICS_CONFIGURED } from "@/lib/analytics";
 import { YandexMetrica } from "@/components/analytics/YandexMetrica";
-import { faq as faqContent } from "@/lib/content";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -93,31 +92,6 @@ const serviceJsonLd = {
   areaServed: ["US", "CA"],
 };
 
-/**
- * FAQPage schema, generated from the same `faq` array (lib/content.ts) that
- * renders the visible accordion in components/sections/FAQ.tsx, so the two
- * can never drift. 07-codex-technical-spec.md only permits FAQ schema when
- * it exactly matches the visible content — deriving both from one source is
- * what guarantees that. `stripHtml` is defensive: the current copy has no
- * markup, but the emitted JSON-LD must never carry any if that ever changes.
- */
-function stripHtml(value: string): string {
-  return value.replace(/<[^>]*>/g, "").trim();
-}
-
-const faqJsonLd = {
-  "@context": "https://schema.org",
-  "@type": "FAQPage",
-  mainEntity: faqContent.map((item) => ({
-    "@type": "Question",
-    name: stripHtml(item.question),
-    acceptedAnswer: {
-      "@type": "Answer",
-      text: stripHtml(item.answer),
-    },
-  })),
-};
-
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -133,10 +107,6 @@ export default function RootLayout({
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceJsonLd) }}
-        />
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
         />
         <Header />
         <main className="flex-1 pb-104 pt-(--layout-header-height) tablet:pb-0">{children}</main>
