@@ -9,7 +9,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   // next.config.ts sets trailingSlash: true, so these must match the
   // trailing-slash URLs the site actually serves (and that layout.tsx's
   // canonical resolves to), not bare paths.
-  const routes = ["/", "/privacy/", "/terms/"];
+  const routes = ["/", "/privacy/", "/terms/", "/professionals/"];
 
   return routes.map((route) => ({
     url: `${SITE_URL}${route}`,

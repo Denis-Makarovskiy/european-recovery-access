@@ -2,6 +2,9 @@ import type { Metadata } from "next";
 import { SITE_NAME } from "@/lib/constants";
 
 export const metadata: Metadata = {
+  // Per-page canonical: the root layout sets "/" for the whole site,
+  // which is wrong for subpages; metadataBase resolves this to the full URL.
+  alternates: { canonical: "/privacy/" },
   title: "Privacy Policy — European Recovery Access",
   description: `Privacy policy for ${SITE_NAME}: what information we collect, how it is used, where it travels and stored, and your rights.`,
 };

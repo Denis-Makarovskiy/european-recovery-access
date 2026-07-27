@@ -440,3 +440,49 @@ Our role: Distance from familiar surroundings may support continued engagement. 
 European Recovery Access is a service of MK REHAB DOO, a limited liability company registered in Montenegro (reg. no. 5-1051097/002, PIB 03459586).
 
 Registered address: Vojina Katnića, ulaz C-14, stan 19, Podgorica, Montenegro.
+
+## For Professionals page (/professionals)
+
+Eyebrow: **FOR INTERVENTIONISTS, ATTORNEYS AND CLINICIANS**
+
+H1: **When your client's family needs an option that doesn't exist locally**
+
+Intro: You are often the first call a family makes. When the right next step is treatment — and local programs are full, too close to home, or already tried — we give you a European option you can put on the table the same day.
+
+### Audience card 1 — Interventionists
+
+Title: **You secured the yes. We make sure there's somewhere to take it.**
+
+Body: Same-day availability review across our European partner programs. Admission may be possible within days, with travel, transfer and admission logistics handled — so the window you worked for is not lost to a waiting list.
+
+### Audience card 2 — Family attorneys and family offices
+
+Title: **A discreet option you can propose without becoming a healthcare coordinator.**
+
+Body: One accountable counterpart, written program and coordination costs before any commitment, and communication through a single confidential channel. The family engages us directly; you stay in the role they trust you in.
+
+### Audience card 3 — Physicians and therapists
+
+Title: **Continuity, not a handoff into the void.**
+
+Body: With patient consent we coordinate medical-record transfer, and the receiving program's licensed clinical team takes over assessment and treatment decisions. Clinical services are provided by the European treatment programs, not by us — your patient does not disappear from your view unless the family wants it so.
+
+### How it works with you
+
+1. **You introduce us** — or simply give the family our contact. Either way works.
+2. **Same-day case review** — discuss the situation anonymously first; no client details are required for the first conversation.
+3. **Options in writing** — matching programs with availability, level of care and full costs.
+4. **We coordinate, you stay involved** — admission, travel, arrival; updates to you as far as the family consents.
+
+### What we do not do
+
+- **We do not pay referral fees, and we do not accept them.** Payment for patient referrals is illegal in much of the United States and incompatible with professional ethics. Professionals refer because it solves their client's problem; the family engages and pays us directly.
+- We do not provide clinical services, medical advice or emergency care. We are a placement and admissions coordination service.
+
+### CTA block
+
+Heading: **A 20-minute professional walkthrough**
+
+Body: We will show you how coordination works end to end — no client details needed. Call or write, and mention you are a professional.
+
+Buttons: Call Admissions / Email admissions@recoveryeurope.com

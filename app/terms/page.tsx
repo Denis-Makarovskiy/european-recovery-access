@@ -2,6 +2,9 @@ import type { Metadata } from "next";
 import { SITE_NAME } from "@/lib/constants";
 
 export const metadata: Metadata = {
+  // Per-page canonical: the root layout sets "/" for the whole site,
+  // which is wrong for subpages; metadataBase resolves this to the full URL.
+  alternates: { canonical: "/terms/" },
   title: "Terms of Use — European Recovery Access",
   description: `Terms of use for ${SITE_NAME}: who we are, what we are not, costs, responsibilities and governing law.`,
 };

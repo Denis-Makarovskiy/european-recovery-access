@@ -39,6 +39,11 @@ export function Footer() {
                 </a>
               </li>
             ))}
+            <li>
+              <a href="/professionals/" className={footerLink}>
+                For Professionals
+              </a>
+            </li>
           </ul>
         </div>
 

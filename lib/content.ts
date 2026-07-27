@@ -455,3 +455,97 @@ export const footer: FooterContent = {
  */
 export const legalDisclaimer =
   "European Recovery Access is an independent placement and coordination service. It is not an emergency service and does not provide emergency medical care. Program availability and admission depend on clinical suitability and provider capacity.";
+
+export interface ProfessionalsAudienceCard {
+  label: string;
+  title: string;
+  body: string;
+}
+
+/**
+ * "How it works with you" steps. Source copy is a single "**bold lead** —
+ * rest of sentence" line per step; split into `lead`/`rest` here only so the
+ * lead can be rendered as <strong>, same device used elsewhere in this file
+ * (e.g. `whatWeDoNotDo` below) — no wording added or removed.
+ */
+export interface ProfessionalsStep {
+  lead: string;
+  rest: string;
+}
+
+/**
+ * "What we do not do" bullets. Bullet 1 has a bold lead sentence in the
+ * source; bullet 2 has none, hence `lead: null`.
+ */
+export interface ProfessionalsDoNotItem {
+  lead: string | null;
+  rest: string;
+}
+
+export interface ProfessionalsContent {
+  eyebrow: string;
+  h1: string;
+  intro: string;
+  audienceCards: ProfessionalsAudienceCard[];
+  howItWorksHeading: string;
+  howItWorksSteps: ProfessionalsStep[];
+  whatWeDoNotDoHeading: string;
+  whatWeDoNotDoItems: ProfessionalsDoNotItem[];
+  ctaHeading: string;
+  ctaBody: string;
+  ctaCallLabel: string;
+  ctaEmailLabel: string;
+}
+
+/** "For Professionals page (/professionals)", 05-content-en.md — verbatim. */
+export const professionals: ProfessionalsContent = {
+  eyebrow: "FOR INTERVENTIONISTS, ATTORNEYS AND CLINICIANS",
+  h1: "When your client's family needs an option that doesn't exist locally",
+  intro:
+    "You are often the first call a family makes. When the right next step is treatment — and local programs are full, too close to home, or already tried — we give you a European option you can put on the table the same day.",
+  audienceCards: [
+    {
+      label: "Interventionists",
+      title: "You secured the yes. We make sure there's somewhere to take it.",
+      body: "Same-day availability review across our European partner programs. Admission may be possible within days, with travel, transfer and admission logistics handled — so the window you worked for is not lost to a waiting list.",
+    },
+    {
+      label: "Family attorneys and family offices",
+      title: "A discreet option you can propose without becoming a healthcare coordinator.",
+      body: "One accountable counterpart, written program and coordination costs before any commitment, and communication through a single confidential channel. The family engages us directly; you stay in the role they trust you in.",
+    },
+    {
+      label: "Physicians and therapists",
+      title: "Continuity, not a handoff into the void.",
+      body: "With patient consent we coordinate medical-record transfer, and the receiving program's licensed clinical team takes over assessment and treatment decisions. Clinical services are provided by the European treatment programs, not by us — your patient does not disappear from your view unless the family wants it so.",
+    },
+  ],
+  howItWorksHeading: "How it works with you",
+  howItWorksSteps: [
+    { lead: "You introduce us", rest: "or simply give the family our contact. Either way works." },
+    {
+      lead: "Same-day case review",
+      rest: "discuss the situation anonymously first; no client details are required for the first conversation.",
+    },
+    { lead: "Options in writing", rest: "matching programs with availability, level of care and full costs." },
+    {
+      lead: "We coordinate, you stay involved",
+      rest: "admission, travel, arrival; updates to you as far as the family consents.",
+    },
+  ],
+  whatWeDoNotDoHeading: "What we do not do",
+  whatWeDoNotDoItems: [
+    {
+      lead: "We do not pay referral fees, and we do not accept them.",
+      rest: "Payment for patient referrals is illegal in much of the United States and incompatible with professional ethics. Professionals refer because it solves their client's problem; the family engages and pays us directly.",
+    },
+    {
+      lead: null,
+      rest: "We do not provide clinical services, medical advice or emergency care. We are a placement and admissions coordination service.",
+    },
+  ],
+  ctaHeading: "A 20-minute professional walkthrough",
+  ctaBody: "We will show you how coordination works end to end — no client details needed. Call or write, and mention you are a professional.",
+  ctaCallLabel: "Call Admissions",
+  ctaEmailLabel: "Email admissions@recoveryeurope.com",
+};
