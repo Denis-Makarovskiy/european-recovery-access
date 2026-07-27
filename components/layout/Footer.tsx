@@ -23,6 +23,8 @@ export function Footer() {
             <span className="font-serif text-body-l font-weight-semibold">{SITE_NAME}</span>
           </div>
           <p className="mt-16 font-sans text-body-s text-slate-300">{footerContent.descriptor}</p>
+          <p className="mt-16 font-sans text-body-s text-slate-300">{footerContent.companyLine1}</p>
+          <p className="mt-8 font-sans text-body-s text-slate-300">{footerContent.companyLine2}</p>
         </div>
 
         <div>

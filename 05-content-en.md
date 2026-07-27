@@ -349,7 +349,7 @@ Most international placements are private-pay. Some families later request reimb
 
 ### How much does treatment cost?
 
-Pricing varies by program, length of stay, accommodation and clinical needs. We explain the available options and total expected costs before you commit.
+Most European private residential programs our families consider fall between €3,000 and €30,000 per month, depending on the program, level of medical care, accommodation and length of stay. Coordination fees are separate and quoted upfront. You receive the exact program and coordination costs in writing before any commitment.
 
 ### Can the patient leave treatment?
 
@@ -410,3 +410,33 @@ Independent European addiction-treatment placement and admissions coordination f
 Disclaimer:
 
 European Recovery Access is an independent placement and coordination service. It is not a treatment provider, emergency service or substitute for medical advice. Admission is subject to clinical suitability, legal requirements and provider availability.
+
+## Scenarios (section 10 replacement)
+
+Section title: **What families usually need help with**
+
+Subtitle: Illustrative examples of typical situations — not client stories.
+
+### The waiting list
+
+Situation: Their adult son finally agreed to treatment. The nearest suitable program had a six-week waiting list — and his willingness was measured in days.
+
+Our role: We review the situation the same day, confirm availability at matching European programs, and coordinate admission and travel while the window is open.
+
+### Too close to home
+
+Situation: A business owner was ready for treatment, but not at a clinic twenty minutes from her office, her clients and her board.
+
+Our role: A discreet placement abroad: one coordinator, a program on another continent, and family updates through a single confidential channel.
+
+### The same triggers
+
+Situation: Two local programs, two relapses — each time back into the same circle, the same streets, the same phone numbers.
+
+Our role: Distance from familiar surroundings may support continued engagement. We match programs where the environment itself is part of the change, with aftercare planned before departure.
+
+## Company block (footer)
+
+European Recovery Access is a service of MK REHAB DOO, a limited liability company registered in Montenegro (reg. no. 5-1051097/002, PIB 03459586).
+
+Registered address: Vojina Katnića, ulaz C-14, stan 19, Podgorica, Montenegro.

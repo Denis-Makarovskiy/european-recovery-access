@@ -5,10 +5,10 @@
  * this file is the single runtime source of truth for section text so
  * strings never get scattered/duplicated across components.
  *
- * The "Testimonials" section (02-page-structure.md #10) intentionally has no
- * entry here: 05-content-en.md does not provide production copy for it, and
- * per the product constraints no scenario copy should be invented. Whoever
- * builds that section must draft real "anonymized scenario" copy first.
+ * The "Testimonials" section (02-page-structure.md #10) is implemented as
+ * `scenarios` below, using the "Scenarios (section 10 replacement)" copy
+ * from 05-content-en.md: three illustrative, clearly-labelled example
+ * situations, not client stories/testimonials.
  */
 
 export interface NavContent {
@@ -311,6 +311,50 @@ export const suitability: SuitabilityContent = {
     "In an immediate emergency, contact local emergency services or go to the nearest emergency department.",
 };
 
+export interface ScenarioCard {
+  context: string;
+  situation: string;
+  response: string;
+}
+
+export interface ScenariosContent {
+  heading: string;
+  subtitle: string;
+  cards: ScenarioCard[];
+}
+
+/**
+ * Section 10 replacement ("Scenarios", 05-content-en.md): three illustrative
+ * example situations, explicitly labelled as examples rather than client
+ * testimonials/stories per the product constraints in CLAUDE.md.
+ */
+export const scenarios: ScenariosContent = {
+  heading: "What families usually need help with",
+  subtitle: "Illustrative examples of typical situations — not client stories.",
+  cards: [
+    {
+      context: "The waiting list",
+      situation:
+        "Their adult son finally agreed to treatment. The nearest suitable program had a six-week waiting list — and his willingness was measured in days.",
+      response:
+        "We review the situation the same day, confirm availability at matching European programs, and coordinate admission and travel while the window is open.",
+    },
+    {
+      context: "Too close to home",
+      situation:
+        "A business owner was ready for treatment, but not at a clinic twenty minutes from her office, her clients and her board.",
+      response:
+        "A discreet placement abroad: one coordinator, a program on another continent, and family updates through a single confidential channel.",
+    },
+    {
+      context: "The same triggers",
+      situation: "Two local programs, two relapses — each time back into the same circle, the same streets, the same phone numbers.",
+      response:
+        "Distance from familiar surroundings may support continued engagement. We match programs where the environment itself is part of the change, with aftercare planned before departure.",
+    },
+  ],
+};
+
 export interface FaqItem {
   question: string;
   answer: string;
@@ -330,7 +374,7 @@ export const faq: FaqItem[] = [
   {
     question: "How much does treatment cost?",
     answer:
-      "Pricing varies by program, length of stay, accommodation and clinical needs. We explain the available options and total expected costs before you commit.",
+      "Most European private residential programs our families consider fall between €3,000 and €30,000 per month, depending on the program, level of medical care, accommodation and length of stay. Coordination fees are separate and quoted upfront. You receive the exact program and coordination costs in writing before any commitment.",
   },
   {
     question: "Can the patient leave treatment?",
@@ -388,6 +432,8 @@ export const finalCta: FinalCtaContent = {
 export interface FooterContent {
   descriptor: string;
   disclaimer: string;
+  companyLine1: string;
+  companyLine2: string;
 }
 
 export const footer: FooterContent = {
@@ -395,6 +441,10 @@ export const footer: FooterContent = {
     "Independent European addiction-treatment placement and admissions coordination for families in the United States and Canada.",
   disclaimer:
     "European Recovery Access is an independent placement and coordination service. It is not a treatment provider, emergency service or substitute for medical advice. Admission is subject to clinical suitability, legal requirements and provider availability.",
+  // "Company block (footer)", 05-content-en.md.
+  companyLine1:
+    "European Recovery Access is a service of MK REHAB DOO, a limited liability company registered in Montenegro (reg. no. 5-1051097/002, PIB 03459586).",
+  companyLine2: "Registered address: Vojina Katnića, ulaz C-14, stan 19, Podgorica, Montenegro.",
 };
 
 /**
