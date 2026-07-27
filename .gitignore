@@ -40,3 +40,8 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Prospect data stays local: business contacts of third parties must not
+# be published in a public repository.
+drafts/outreach/prospects-seed.csv
+drafts/outreach/prospect-sources.md
