@@ -45,3 +45,4 @@ next-env.d.ts
 # be published in a public repository.
 drafts/outreach/prospects-seed.csv
 drafts/outreach/prospect-sources.md
+drafts/outreach/prospects-*.csv
