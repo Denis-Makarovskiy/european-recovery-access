@@ -109,7 +109,7 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceJsonLd) }}
         />
         <Header />
-        <main className="flex-1 pb-104 pt-(--layout-header-height) tablet:pb-0">{children}</main>
+        <main className="flex-1 pb-104 tablet:pb-0">{children}</main>
         <Footer />
         <MobileStickyBar />
         <YandexMetrica />

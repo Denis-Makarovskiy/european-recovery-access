@@ -247,8 +247,11 @@ function HeroForm({ idPrefix, surface }: { idPrefix: string; surface: "dark" | "
  * Section 2, "Hero" (02-page-structure.md): two-column desktop layout (7/5)
  * over the token-driven navy gradient placeholder (no licensed hero photo
  * exists yet, see app/globals.css `hero-gradient-placeholder`). Below the
- * desktop-small breakpoint the visible form card is replaced by a CTA that
- * opens the same form in the shared Modal primitive, per spec.
+ * desktop-small breakpoint the visible form card is replaced by a CTA pair
+ * (gold "Check Availability", opening the same form in the shared Modal
+ * primitive, plus an outline "Call Admissions" fallback) instead of the
+ * copy column's own CTA pair, which is hidden at those widths to avoid
+ * rendering two gold CTAs stacked on one screen.
  */
 export function Hero() {
   const [modalOpen, setModalOpen] = useState(false);
@@ -325,23 +328,14 @@ export function Hero() {
             ))}
           </ul>
 
-          <div className="mt-32 flex flex-col gap-16 tablet:flex-row tablet:items-center">
+          <div className="mt-32 hidden flex-col gap-16 desktop-small:flex tablet:flex-row tablet:items-center">
             <ButtonLink
               href="#hero-form-card"
               variant="primary"
-              className="hidden desktop-small:inline-flex"
               onClick={() => handlePrimaryCtaClick("scroll")}
             >
               {content.primaryCta}
             </ButtonLink>
-            <Button
-              type="button"
-              variant="primary"
-              className="desktop-small:hidden"
-              onClick={() => handlePrimaryCtaClick("modal")}
-            >
-              {content.primaryCta}
-            </Button>
 
             <ButtonLink
               href={ADMISSIONS_PHONE_HREF}
@@ -357,14 +351,42 @@ export function Hero() {
           <p className="mt-24 font-sans text-body-s text-white/70">{content.microcopy}</p>
         </div>
 
-        <div id="hero-form-card" className="hidden scroll-mt-(--layout-header-height) desktop-small:col-span-5 desktop-small:block">
-          <Card variant="form" className="ml-auto">
-            <h2 className="font-serif text-h4 text-white">{heroForm.title}</h2>
-            <p className="mt-8 font-sans text-body-s text-white/80">{heroForm.subtitle}</p>
-            <div className="mt-24">
-              <HeroForm idPrefix="hero-desktop" surface="dark" />
-            </div>
-          </Card>
+        <div id="hero-form-card" className="scroll-mt-(--layout-header-height) desktop-small:col-span-5">
+          {/* Below desktop-small the form card is replaced by a CTA pair that
+              opens the same form in the shared Modal primitive (mounted at
+              the bottom of this section), plus a call fallback so tablet
+              widths (768–1023, where MobileStickyBar is hidden) still carry
+              a call action next to the "Check Availability" trigger. */}
+          <div className="flex flex-col gap-16 desktop-small:hidden">
+            <Button
+              type="button"
+              variant="primary"
+              className="w-full"
+              onClick={() => handlePrimaryCtaClick("modal")}
+            >
+              {content.primaryCta}
+            </Button>
+            <ButtonLink
+              href={ADMISSIONS_PHONE_HREF}
+              variant="darkSecondary"
+              className="w-full"
+              icon={<Phone aria-hidden className="size-16" />}
+              iconPosition="start"
+              onClick={() => trackCallClick({ device_category: "mobile" })}
+            >
+              {content.secondaryCta}
+            </ButtonLink>
+          </div>
+
+          <div className="hidden desktop-small:block">
+            <Card variant="form" className="ml-auto">
+              <h2 className="font-serif text-h4 text-white">{heroForm.title}</h2>
+              <p className="mt-8 font-sans text-body-s text-white/80">{heroForm.subtitle}</p>
+              <div className="mt-24">
+                <HeroForm idPrefix="hero-desktop" surface="dark" />
+              </div>
+            </Card>
+          </div>
         </div>
       </div>
 

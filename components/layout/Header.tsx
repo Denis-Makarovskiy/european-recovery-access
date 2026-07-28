@@ -47,7 +47,7 @@ export function Header() {
   return (
     <header
       className={[
-        "fixed inset-x-0 top-0 z-40 h-(--layout-header-height) bg-white transition-shadow duration-200",
+        "sticky top-0 z-40 h-(--layout-header-height) bg-white transition-shadow duration-200",
         scrolled ? "border-b border-token-default shadow-header" : "",
       ].join(" ")}
     >
