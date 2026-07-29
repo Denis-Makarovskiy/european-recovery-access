@@ -95,7 +95,7 @@ export default function TermsPage() {
 
         <p>
           <strong className="font-weight-semibold text-navy-950">Contact:</strong> MK REHAB DOO, Vojina Katnića,
-          ulaz C-14, stan 19, Podgorica, Montenegro, montenegrorehab@gmail.com, +1 (478) 309-7957.
+          ulaz C-14, stan 19, Podgorica, Montenegro, admissions@recoveryeurope.com, +1 (478) 309-7957.
         </p>
       </div>
     </div>

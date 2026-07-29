@@ -56,5 +56,5 @@ carriers or other third parties.
 These terms are governed by the laws of Montenegro. Disputes are subject
 to the courts of Montenegro.
 
-**Contact:** MK REHAB DOO, Vojina Katnića, ulaz C-14, stan 19, Podgorica, Montenegro, montenegrorehab@gmail.com,
+**Contact:** MK REHAB DOO, Vojina Katnića, ulaz C-14, stan 19, Podgorica, Montenegro, admissions@recoveryeurope.com,
 +1 (478) 309-7957.

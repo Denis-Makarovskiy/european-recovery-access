@@ -97,7 +97,7 @@ export default function PrivacyPage() {
           <p>
             Depending on your place of residence (including California under the CCPA and Canada under PIPEDA), you
             may request access to, correction of, or deletion of your personal information. Write to
-            montenegrorehab@gmail.com and we will respond within 30 days. You may also ask us at any time to stop
+            admissions@recoveryeurope.com and we will respond within 30 days. You may also ask us at any time to stop
             contacting you.
           </p>
         </section>
@@ -117,7 +117,7 @@ export default function PrivacyPage() {
 
         <p>
           <strong className="font-weight-semibold text-navy-950">Contact:</strong> MK REHAB DOO, Vojina Katnića,
-          ulaz C-14, stan 19, Podgorica, Montenegro, montenegrorehab@gmail.com, +1 (478) 309-7957.
+          ulaz C-14, stan 19, Podgorica, Montenegro, admissions@recoveryeurope.com, +1 (478) 309-7957.
         </p>
       </div>
     </div>
