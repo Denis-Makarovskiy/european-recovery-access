@@ -23,7 +23,7 @@ interface HeroFormValues {
   urgency: string;
   consent: boolean;
   /** Hidden spam-trap field, mirroring components/sections/Assessment.tsx. */
-  company: string;
+  fax_number: string;
 }
 
 const DEFAULT_VALUES: HeroFormValues = {
@@ -33,7 +33,7 @@ const DEFAULT_VALUES: HeroFormValues = {
   relationship: "",
   urgency: "",
   consent: false,
-  company: "",
+  fax_number: "",
 };
 
 type FormStatus = "idle" | "success" | "error";
@@ -103,7 +103,7 @@ function HeroForm({ idPrefix, surface }: { idPrefix: string; surface: "dark" | "
           relationship: values.relationship || undefined,
           urgency: values.urgency || undefined,
           consent: values.consent,
-          company: values.company,
+          fax_number: values.fax_number,
         }),
       });
       const payload = await response.json().catch(() => null);
@@ -151,8 +151,8 @@ function HeroForm({ idPrefix, surface }: { idPrefix: string; surface: "dark" | "
     >
       {/* Hidden honeypot: real visitors never see or fill this in. */}
       <div className="sr-only" aria-hidden="true">
-        <label htmlFor={`${idPrefix}-company`}>Leave this field blank</label>
-        <input id={`${idPrefix}-company`} type="text" tabIndex={-1} autoComplete="off" {...register("company")} />
+        <label htmlFor={`${idPrefix}-fax_number`}>Leave this field blank</label>
+        <input id={`${idPrefix}-fax_number`} type="text" tabIndex={-1} autoComplete="off" {...register("fax_number")} />
       </div>
 
       {submitError && (

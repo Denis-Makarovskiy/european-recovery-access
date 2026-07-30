@@ -39,7 +39,7 @@ interface AssessmentFormValues {
   callbackTime: string;
   consent: boolean;
   /** Hidden spam-trap field. Real visitors never fill this in. */
-  company: string;
+  fax_number: string;
 }
 
 const DEFAULT_VALUES: AssessmentFormValues = {
@@ -52,7 +52,7 @@ const DEFAULT_VALUES: AssessmentFormValues = {
   email: "",
   callbackTime: "",
   consent: false,
-  company: "",
+  fax_number: "",
 };
 
 /**
@@ -107,7 +107,7 @@ const assessmentSchema = z
  * resolver contract (node_modules/react-hook-form/dist/types/resolvers.d.ts)
  * is simple enough to satisfy directly: safeParse and map Zod issues onto a
  * FieldErrors object keyed by the first path segment. On success we return
- * the live `values` (not `result.data`) so the untouched honeypot `company`
+ * the live `values` (not `result.data`) so the untouched honeypot `fax_number`
  * field — intentionally outside `assessmentSchema` — survives into onSubmit.
  */
 const resolver: Resolver<AssessmentFormValues> = (values) => {
@@ -343,7 +343,7 @@ export function Assessment() {
           urgency: data.urgency,
           callbackTime: data.callbackTime || undefined,
           consent: data.consent,
-          company: data.company,
+          fax_number: data.fax_number,
         }),
       });
       const payload = await response.json().catch(() => null);
@@ -398,8 +398,8 @@ export function Assessment() {
 
                 {/* Hidden honeypot field: real visitors never see or fill this in. */}
                 <div aria-hidden="true" className="pointer-events-none absolute left-[-9999px] h-px w-px overflow-hidden">
-                  <label htmlFor="assessment-company">Leave this field blank</label>
-                  <input id="assessment-company" type="text" tabIndex={-1} autoComplete="off" {...register("company")} />
+                  <label htmlFor="assessment-fax_number">Leave this field blank</label>
+                  <input id="assessment-fax_number" type="text" tabIndex={-1} autoComplete="off" {...register("fax_number")} />
                 </div>
 
                 {submitError && (

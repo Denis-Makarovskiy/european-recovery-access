@@ -46,3 +46,9 @@ next-env.d.ts
 drafts/outreach/prospects-seed.csv
 drafts/outreach/prospect-sources.md
 drafts/outreach/prospects-*.csv
+
+# The lead Worker now lives in its own PRIVATE repository:
+# github.com/Denis-Makarovskiy/era-lead-worker
+# Publishing its source next to a public static site exposed the honeypot
+# field name and the rate-limit parameters. Do not re-add it here.
+worker/
