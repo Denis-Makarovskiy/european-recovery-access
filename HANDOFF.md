@@ -45,18 +45,22 @@ basePath**. Всё из `public/` идёт через `assetPath()` из `lib/co
 
 ### Приёмник заявок
 Cloudflare Worker **`era-lead-worker`**, аккаунт `5b9ece96c73adcf679b90b179a1f5958`,
-адрес `https://era-lead-worker.d-makarovskiy.workers.dev`, исходник в
-`worker/` репозитория Recovery.
+адрес `https://era-lead-worker.d-makarovskiy.workers.dev`, исходник — в
+**отдельном приватном репозитории** `Denis-Makarovskiy/era-lead-worker`
+(локально `~/Developer/Active/era-lead-worker`). В публичном репозитории сайта
+его нет и быть не должно: там он публиковал имя honeypot-поля и параметры
+лимита рядом с сайтом, который защищает. История публичного репозитория
+переписана, каталог `worker/` внесён в `.gitignore`.
 
 - Обслуживает **оба** сайта: поле `site` в теле запроса помечает бренд в
   сообщении Telegram (`clarityeurope` → «Clarity Europe», отсутствие → «Recovery Europe»).
 - Валидация Zod (копия схемы из `lib/validation.ts` — **синхронизировать вручную**),
-  honeypot-поле `company`, лимит 5 запросов / 10 мин на IP через KV
+  honeypot-поле `fax_number` (прежнее имя `company` было опубликовано и потому сменено; поле необязательное — рассинхрон фронтенда и Worker'а отключает ловушку, но не ломает отправку), лимит 5 запросов / 10 мин на IP через KV
   `b6cd686b778e45ffa9946817db842d5d`, доставка в Telegram, опциональный
   дублирующий webhook.
 - Запрос с Origin не из `ALLOWED_ORIGINS` отклоняется с 403.
 - Секреты (`TELEGRAM_BOT_TOKEN`, `TELEGRAM_CHAT_ID`) — в секретах Cloudflare.
-  Деплой: `worker/.secrets.env` (в `.gitignore`) + `npx wrangler deploy`.
+  Деплой: `.secrets.env` в каталоге Worker'а (в `.gitignore`) + `npx wrangler deploy`.
 
 Бот: `@addictagencybot`, chat_id `528807411`.
 
@@ -157,9 +161,7 @@ prohibited and may be grounds for immediate denial». Сертифицируют
 - Схема валидации продублирована в сайте и Worker — разъедутся молча.
 - Turnstile против прямого спама на эндпоинт (CORS не защищает от POST мимо браузера).
 - Баннер согласия на куки (Калифорния, Канада).
-- Worker лежит в **публичном** репозитории вместе с именем honeypot-поля и
-  параметрами лимита — стоит вынести в приватный.
-- `worker/.secrets.env` с боевыми ключами лежит на диске (права 600, в gitignore).
+- `.secrets.env` с боевыми ключами лежит на диске в каталоге Worker'а (в gitignore).
 - Производительность мобильная 80 при цели 90: упирается в сеть GitHub Pages,
   не в код. Заметный выигрыш даст переезд на Cloudflare Pages.
 - Clarity: нет фотографии в hero (только градиент), нет своего GA4 и Search Console.
